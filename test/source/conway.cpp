@@ -1,6 +1,6 @@
-#include <doctest/doctest.h>
 #include <conway/conway.h>
 #include <conway/version.h>
+#include <doctest/doctest.h>
 
 #include <string>
 
