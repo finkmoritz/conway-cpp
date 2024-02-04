@@ -46,4 +46,25 @@ void Conway::setCellOn(short x, short y) {
   }
 }
 
+void Conway::setCellOff(short x, short y) {
+  char* cell = cells + y * width + x;
+
+  *cell &= ~0x01;
+
+  if (y > 0) {
+    if (x > 0) cell[-width - 1] -= 2;
+    cell[-width] -= 2;
+    if (x < width - 1) cell[-width + 1] -= 2;
+  }
+
+  if (x > 0) cell[-1] -= 2;
+  if (x < width - 1) cell[+1] -= 2;
+
+  if (y < height - 1) {
+    if (x > 0) cell[+width - 1] -= 2;
+    cell[+width] -= 2;
+    if (x < width - 1) cell[+width + 1] -= 2;
+  }
+}
+
 short Conway::getNeighbourCount(short x, short y) { return cells[y * width + x] >> 1; }

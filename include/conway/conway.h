@@ -45,6 +45,11 @@ namespace conway {
     void setCellOn(short x, short y);
 
     /**
+     * @brief Sets the cell at the given coordinates to the off state
+     */
+    void setCellOff(short x, short y);
+
+    /**
      * @brief Returns the number of live neighbour cells for the cells at the given coordinates
      */
     short getNeighbourCount(short x, short y);

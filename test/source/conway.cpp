@@ -53,6 +53,22 @@ TEST_CASE("SetCellOn") {
   CHECK(conway.isCellOn(0, 0));
 }
 
+TEST_CASE("SetCellOff") {
+  using namespace conway;
+
+  Conway conway(1, 1);
+
+  CHECK(!conway.isCellOn(0, 0));
+
+  conway.setCellOn(0, 0);
+
+  CHECK(conway.isCellOn(0, 0));
+
+  conway.setCellOff(0, 0);
+
+  CHECK(!conway.isCellOn(0, 0));
+}
+
 TEST_CASE("GetNeighbourCount") {
   using namespace conway;
 
@@ -68,6 +84,14 @@ TEST_CASE("GetNeighbourCount") {
     for (short x = 0; x < width; ++x) {
       if (x == 1 && y == 1) continue;
       CHECK(conway.getNeighbourCount(x, y) == 1);
+    }
+  }
+
+  conway.setCellOff(1, 1);
+
+  for (short y = 0; y < height; ++y) {
+    for (short x = 0; x < width; ++x) {
+      CHECK(conway.getNeighbourCount(x, y) == 0);
     }
   }
 }
@@ -90,4 +114,12 @@ TEST_CASE("GetNeighbourCount (on boundary)") {
   CHECK(conway.getNeighbourCount(0, 2) == 0);
   CHECK(conway.getNeighbourCount(1, 2) == 0);
   CHECK(conway.getNeighbourCount(2, 2) == 0);
+
+  conway.setCellOff(0, 0);
+
+  for (short y = 0; y < height; ++y) {
+    for (short x = 0; x < width; ++x) {
+      CHECK(conway.getNeighbourCount(x, y) == 0);
+    }
+  }
 }
