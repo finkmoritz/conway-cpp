@@ -40,3 +40,54 @@ TEST_CASE("IsCellOn") {
     }
   }
 }
+
+TEST_CASE("SetCellOn") {
+  using namespace conway;
+
+  Conway conway(1, 1);
+
+  CHECK(!conway.isCellOn(0, 0));
+
+  conway.setCellOn(0, 0);
+
+  CHECK(conway.isCellOn(0, 0));
+}
+
+TEST_CASE("GetNeighbourCount") {
+  using namespace conway;
+
+  short width = 3;
+  short height = 3;
+  Conway conway(width, height);
+
+  conway.setCellOn(1, 1);
+
+  CHECK(conway.getNeighbourCount(1, 1) == 0);
+
+  for (short y = 0; y < height; ++y) {
+    for (short x = 0; x < width; ++x) {
+      if (x == 1 && y == 1) continue;
+      CHECK(conway.getNeighbourCount(x, y) == 1);
+    }
+  }
+}
+
+TEST_CASE("GetNeighbourCount (on boundary)") {
+  using namespace conway;
+
+  short width = 3;
+  short height = 3;
+  Conway conway(width, height);
+
+  conway.setCellOn(0, 0);
+
+  CHECK(conway.getNeighbourCount(0, 0) == 0);
+  CHECK(conway.getNeighbourCount(1, 0) == 1);
+  CHECK(conway.getNeighbourCount(2, 0) == 0);
+  CHECK(conway.getNeighbourCount(0, 1) == 1);
+  CHECK(conway.getNeighbourCount(1, 1) == 1);
+  CHECK(conway.getNeighbourCount(2, 1) == 0);
+  CHECK(conway.getNeighbourCount(0, 2) == 0);
+  CHECK(conway.getNeighbourCount(1, 2) == 0);
+  CHECK(conway.getNeighbourCount(2, 2) == 0);
+}

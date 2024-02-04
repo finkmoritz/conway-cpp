@@ -35,9 +35,19 @@ namespace conway {
     void print();
 
     /**
-     * @brief Returns true if the cell at the give coordinates is on
+     * @brief Returns true if the cell at the given coordinates is on
      */
     bool isCellOn(short x, short y);
+
+    /**
+     * @brief Sets the cell at the given coordinates to the on state
+     */
+    void setCellOn(short x, short y);
+
+    /**
+     * @brief Returns the number of live neighbour cells for the cells at the given coordinates
+     */
+    short getNeighbourCount(short x, short y);
   };
 
 }  // namespace conway

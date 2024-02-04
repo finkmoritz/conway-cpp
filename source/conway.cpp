@@ -24,3 +24,26 @@ void Conway::print() {
 }
 
 bool Conway::isCellOn(short x, short y) { return cells[y * width + x] & 0x01; }
+
+void Conway::setCellOn(short x, short y) {
+  char *cell_ptr = cells + (y * width) + x;
+
+  *(cell_ptr) |= 0x01;
+
+  if (y > 0) {
+    if (x > 0) *(cell_ptr - width - 1) += 2;
+    *(cell_ptr - width) += 2;
+    if (x < width - 1) *(cell_ptr - width + 1) += 2;
+  }
+
+  if (x > 0) *(cell_ptr - 1) += 2;
+  if (x < width - 1) *(cell_ptr + 1) += 2;
+
+  if (y < height - 1) {
+    if (x > 0) *(cell_ptr + width - 1) += 2;
+    *(cell_ptr + width) += 2;
+    if (x < width - 1) *(cell_ptr + width + 1) += 2;
+  }
+}
+
+short Conway::getNeighbourCount(short x, short y) { return cells[y * width + x] >> 1; }
