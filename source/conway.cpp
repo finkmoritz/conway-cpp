@@ -10,7 +10,7 @@ Conway::Conway(short _width, short _height) : width(std::move(_width)), height(s
 
 Conway::~Conway() { delete[] cells; }
 
-Conway::Conway(Conway &other) : width(other.width), height(other.height) {
+Conway::Conway(Conway& other) : width(other.width), height(other.height) {
   cells = new char[other.width * other.height]();
 }
 
@@ -26,23 +26,23 @@ void Conway::print() {
 bool Conway::isCellOn(short x, short y) { return cells[y * width + x] & 0x01; }
 
 void Conway::setCellOn(short x, short y) {
-  char *cell_ptr = cells + (y * width) + x;
+  char* cell = cells + y * width + x;
 
-  *(cell_ptr) |= 0x01;
+  *cell |= 0x01;
 
   if (y > 0) {
-    if (x > 0) *(cell_ptr - width - 1) += 2;
-    *(cell_ptr - width) += 2;
-    if (x < width - 1) *(cell_ptr - width + 1) += 2;
+    if (x > 0) cell[-width - 1] += 2;
+    cell[-width] += 2;
+    if (x < width - 1) cell[-width + 1] += 2;
   }
 
-  if (x > 0) *(cell_ptr - 1) += 2;
-  if (x < width - 1) *(cell_ptr + 1) += 2;
+  if (x > 0) cell[-1] += 2;
+  if (x < width - 1) cell[+1] += 2;
 
   if (y < height - 1) {
-    if (x > 0) *(cell_ptr + width - 1) += 2;
-    *(cell_ptr + width) += 2;
-    if (x < width - 1) *(cell_ptr + width + 1) += 2;
+    if (x > 0) cell[+width - 1] += 2;
+    cell[+width] += 2;
+    if (x < width - 1) cell[+width + 1] += 2;
   }
 }
 
