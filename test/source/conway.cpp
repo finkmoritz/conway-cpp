@@ -4,15 +4,10 @@
 
 #include <string>
 
-TEST_CASE("Conway") {
+TEST_CASE("Conway constructor") {
   using namespace conway;
 
-  Conway conway("Tests");
-
-  CHECK(conway.greet(LanguageCode::EN) == "Hello, Tests!");
-  CHECK(conway.greet(LanguageCode::DE) == "Hallo Tests!");
-  CHECK(conway.greet(LanguageCode::ES) == "¡Hola Tests!");
-  CHECK(conway.greet(LanguageCode::FR) == "Bonjour Tests!");
+  Conway conway(3, 3);
 }
 
 TEST_CASE("Conway version") {

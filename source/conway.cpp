@@ -1,20 +1,20 @@
 #include <conway/conway.h>
-#include <fmt/format.h>
+
+#include <iostream>
 
 using namespace conway;
 
-Conway::Conway(std::string _name) : name(std::move(_name)) {}
+Conway::Conway(short _width, short _height) : width(std::move(_width)), height(std::move(_height)) {
+  cells = new char[_width * _height];
+}
 
-std::string Conway::greet(LanguageCode lang) const {
-  switch (lang) {
-    default:
-    case LanguageCode::EN:
-      return fmt::format("Hello, {}!", name);
-    case LanguageCode::DE:
-      return fmt::format("Hallo {}!", name);
-    case LanguageCode::ES:
-      return fmt::format("¡Hola {}!", name);
-    case LanguageCode::FR:
-      return fmt::format("Bonjour {}!", name);
+Conway::~Conway() { delete[] cells; }
+
+void Conway::print() {
+  for (short h = 0; h < height; ++h) {
+    for (short w = 0; w < width; ++w) {
+      std::cout << (cells[h * width + w] & 0x01) << " ";
+    }
+    std::cout << std::endl;
   }
 }

@@ -1,31 +1,32 @@
 #pragma once
 
-#include <string>
-
 namespace conway {
 
-  /**  Language codes to be used with the Conway class */
-  enum class LanguageCode { EN, DE, ES, FR };
-
   /**
-   * @brief A class for saying hello in multiple languages
+   * @brief A class for simulations based on Conway's Game of Life
    */
   class Conway {
-    std::string name;
+    short width;
+    short height;
+    char* cells;
 
   public:
     /**
-     * @brief Creates a new conway
-     * @param name the name to greet
+     * @brief Creates a new Conway's Game of Life
+     * @param width Width of the cell map
+     * @param height Height of the cell map
      */
-    Conway(std::string name);
+    Conway(short width, short height);
 
     /**
-     * @brief Creates a localized string containing the greeting
-     * @param lang the language to greet in
-     * @return a string containing the greeting
+     * @brief Destructs this Conway's Game of Life
      */
-    std::string greet(LanguageCode lang = LanguageCode::EN) const;
+    ~Conway();
+
+    /**
+     * @brief Prints the cell map
+     */
+    void print();
   };
 
 }  // namespace conway

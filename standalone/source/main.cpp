@@ -2,29 +2,19 @@
 #include <conway/version.h>
 
 #include <cxxopts.hpp>
-#include <iostream>
-#include <string>
-#include <unordered_map>
 
 auto main(int argc, char** argv) -> int {
-  const std::unordered_map<std::string, conway::LanguageCode> languages{
-      {"en", conway::LanguageCode::EN},
-      {"de", conway::LanguageCode::DE},
-      {"es", conway::LanguageCode::ES},
-      {"fr", conway::LanguageCode::FR},
-  };
+  cxxopts::Options options(*argv, "Simulate Conway's Game of Life");
 
-  cxxopts::Options options(*argv, "A program to welcome the world!");
-
-  std::string language;
-  std::string name;
+  short width;
+  short height;
 
   // clang-format off
   options.add_options()
     ("h,help", "Show help")
     ("v,version", "Print the current version number")
-    ("n,name", "Name to greet", cxxopts::value(name)->default_value("World"))
-    ("l,lang", "Language code to use", cxxopts::value(language)->default_value("en"))
+    ("width", "Set the width of the cell map", cxxopts::value(width)->default_value("8"))
+    ("height", "Set the height of the cell map", cxxopts::value(height)->default_value("8"))
   ;
   // clang-format on
 
@@ -40,14 +30,18 @@ auto main(int argc, char** argv) -> int {
     return 0;
   }
 
-  auto langIt = languages.find(language);
-  if (langIt == languages.end()) {
-    std::cerr << "unknown language code: " << language << std::endl;
+  if (width < 1) {
+    std::cerr << "Option 'width' must be a positive number!" << std::endl;
     return 1;
   }
 
-  conway::Conway conway(name);
-  std::cout << conway.greet(langIt->second) << std::endl;
+  if (height < 1) {
+    std::cerr << "Option 'height' must be a positive number!" << std::endl;
+    return 1;
+  }
+
+  conway::Conway conway(width, height);
+  conway.print();
 
   return 0;
 }
