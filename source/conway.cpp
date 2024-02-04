@@ -89,7 +89,7 @@ unsigned short Conway::get_neighbour_count(unsigned short x, unsigned short y) {
 void Conway::next_generation() {
   change_list.remove_if([this](int index) {
     unsigned short neighbourCount = cells[index] >> 1;
-    if (is_cell_on(index % width, index / (int)width)) {
+    if (is_cell_on(index % width, static_cast<unsigned short>(index / width))) {
       return neighbourCount == 2 || neighbourCount == 3;
     } else {
       return neighbourCount != 3;
@@ -97,6 +97,6 @@ void Conway::next_generation() {
   });
 
   for (unsigned short index : change_list) {
-    toggle_cell(index % width, index / (int)width);
+    toggle_cell(index % width, static_cast<unsigned short>(index / width));
   }
 }
