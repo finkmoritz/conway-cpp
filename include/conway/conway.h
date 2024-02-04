@@ -24,9 +24,20 @@ namespace conway {
     ~Conway();
 
     /**
+     * @brief Copy constructor
+     * @param other Object to copy from
+     */
+    Conway(Conway& other);
+
+    /**
      * @brief Prints the cell map
      */
     void print();
+
+    /**
+     * @brief Returns true if the cell at the give coordinates is on
+     */
+    bool isCellOn(short x, short y);
   };
 
 }  // namespace conway
