@@ -15,171 +15,171 @@ TEST_CASE("Constructor") {
 TEST_CASE("Copy Constructor") {
   using namespace conway;
 
-  short width = 3;
-  short height = 3;
+  unsigned short width = 3;
+  unsigned short height = 3;
   Conway conway(width, height);
   Conway other(conway);
 
-  for (short y = 0; y < height; ++y) {
-    for (short x = 0; x < width; ++x) {
-      CHECK(conway.isCellOn(x, y) == other.isCellOn(x, y));
+  for (unsigned short y = 0; y < height; ++y) {
+    for (unsigned short x = 0; x < width; ++x) {
+      CHECK(conway.is_cell_on(x, y) == other.is_cell_on(x, y));
     }
   }
 }
 
-TEST_CASE("IsCellOn") {
+TEST_CASE("is_cell_on") {
   using namespace conway;
 
-  short width = 3;
-  short height = 3;
+  unsigned short width = 3;
+  unsigned short height = 3;
   Conway conway(width, height);
 
-  for (short y = 0; y < height; ++y) {
-    for (short x = 0; x < width; ++x) {
-      CHECK(!conway.isCellOn(x, y));
+  for (unsigned short y = 0; y < height; ++y) {
+    for (unsigned short x = 0; x < width; ++x) {
+      CHECK(!conway.is_cell_on(x, y));
     }
   }
 }
 
-TEST_CASE("SetCellOn") {
+TEST_CASE("set_cell_on") {
   using namespace conway;
 
   Conway conway(1, 1);
 
-  CHECK(!conway.isCellOn(0, 0));
+  CHECK(!conway.is_cell_on(0, 0));
 
-  conway.setCellOn(0, 0);
+  conway.set_cell_on(0, 0);
 
-  CHECK(conway.isCellOn(0, 0));
+  CHECK(conway.is_cell_on(0, 0));
 }
 
-TEST_CASE("SetCellOff") {
+TEST_CASE("set_cell_off") {
   using namespace conway;
 
   Conway conway(1, 1);
 
-  CHECK(!conway.isCellOn(0, 0));
+  CHECK(!conway.is_cell_on(0, 0));
 
-  conway.setCellOn(0, 0);
+  conway.set_cell_on(0, 0);
 
-  CHECK(conway.isCellOn(0, 0));
+  CHECK(conway.is_cell_on(0, 0));
 
-  conway.setCellOff(0, 0);
+  conway.set_cell_off(0, 0);
 
-  CHECK(!conway.isCellOn(0, 0));
+  CHECK(!conway.is_cell_on(0, 0));
 }
 
-TEST_CASE("ToggleCell") {
+TEST_CASE("toggle_cell") {
   using namespace conway;
 
   Conway conway(1, 1);
 
-  CHECK(!conway.isCellOn(0, 0));
+  CHECK(!conway.is_cell_on(0, 0));
 
-  conway.toggleCell(0, 0);
+  conway.toggle_cell(0, 0);
 
-  CHECK(conway.isCellOn(0, 0));
+  CHECK(conway.is_cell_on(0, 0));
 
-  conway.toggleCell(0, 0);
+  conway.toggle_cell(0, 0);
 
-  CHECK(!conway.isCellOn(0, 0));
+  CHECK(!conway.is_cell_on(0, 0));
 }
 
-TEST_CASE("GetNeighbourCount") {
+TEST_CASE("get_neighbour_count") {
   using namespace conway;
 
-  short width = 3;
-  short height = 3;
+  unsigned short width = 3;
+  unsigned short height = 3;
   Conway conway(width, height);
 
-  conway.setCellOn(1, 1);
+  conway.set_cell_on(1, 1);
 
-  CHECK(conway.getNeighbourCount(1, 1) == 0);
+  CHECK(conway.get_neighbour_count(1, 1) == 0);
 
-  for (short y = 0; y < height; ++y) {
-    for (short x = 0; x < width; ++x) {
+  for (unsigned short y = 0; y < height; ++y) {
+    for (unsigned short x = 0; x < width; ++x) {
       if (x == 1 && y == 1) continue;
-      CHECK(conway.getNeighbourCount(x, y) == 1);
+      CHECK(conway.get_neighbour_count(x, y) == 1);
     }
   }
 
-  conway.setCellOff(1, 1);
+  conway.set_cell_off(1, 1);
 
-  for (short y = 0; y < height; ++y) {
-    for (short x = 0; x < width; ++x) {
-      CHECK(conway.getNeighbourCount(x, y) == 0);
+  for (unsigned short y = 0; y < height; ++y) {
+    for (unsigned short x = 0; x < width; ++x) {
+      CHECK(conway.get_neighbour_count(x, y) == 0);
     }
   }
 }
 
-TEST_CASE("GetNeighbourCount (on boundary)") {
+TEST_CASE("get_neighbour_count (on boundary)") {
   using namespace conway;
 
-  short width = 3;
-  short height = 3;
+  unsigned short width = 3;
+  unsigned short height = 3;
   Conway conway(width, height);
 
-  conway.setCellOn(0, 0);
+  conway.set_cell_on(0, 0);
 
-  CHECK(conway.getNeighbourCount(0, 0) == 0);
-  CHECK(conway.getNeighbourCount(1, 0) == 1);
-  CHECK(conway.getNeighbourCount(2, 0) == 0);
-  CHECK(conway.getNeighbourCount(0, 1) == 1);
-  CHECK(conway.getNeighbourCount(1, 1) == 1);
-  CHECK(conway.getNeighbourCount(2, 1) == 0);
-  CHECK(conway.getNeighbourCount(0, 2) == 0);
-  CHECK(conway.getNeighbourCount(1, 2) == 0);
-  CHECK(conway.getNeighbourCount(2, 2) == 0);
+  CHECK(conway.get_neighbour_count(0, 0) == 0);
+  CHECK(conway.get_neighbour_count(1, 0) == 1);
+  CHECK(conway.get_neighbour_count(2, 0) == 0);
+  CHECK(conway.get_neighbour_count(0, 1) == 1);
+  CHECK(conway.get_neighbour_count(1, 1) == 1);
+  CHECK(conway.get_neighbour_count(2, 1) == 0);
+  CHECK(conway.get_neighbour_count(0, 2) == 0);
+  CHECK(conway.get_neighbour_count(1, 2) == 0);
+  CHECK(conway.get_neighbour_count(2, 2) == 0);
 
-  conway.setCellOff(0, 0);
+  conway.set_cell_off(0, 0);
 
-  for (short y = 0; y < height; ++y) {
-    for (short x = 0; x < width; ++x) {
-      CHECK(conway.getNeighbourCount(x, y) == 0);
+  for (unsigned short y = 0; y < height; ++y) {
+    for (unsigned short x = 0; x < width; ++x) {
+      CHECK(conway.get_neighbour_count(x, y) == 0);
     }
   }
 }
 
-TEST_CASE("NextGeneration") {
+TEST_CASE("next_generation") {
   using namespace conway;
 
   Conway conway(3, 3);
 
-  conway.setCellOn(0, 1);
-  conway.setCellOn(1, 0);
-  conway.setCellOn(1, 1);
+  conway.set_cell_on(0, 1);
+  conway.set_cell_on(1, 0);
+  conway.set_cell_on(1, 1);
 
-  conway.nextGeneration();
+  conway.next_generation();
 
-  CHECK(conway.isCellOn(0, 0));
-  CHECK(conway.isCellOn(1, 0));
-  CHECK(conway.isCellOn(2, 0) == false);
-  CHECK(conway.isCellOn(0, 1));
-  CHECK(conway.isCellOn(1, 1));
-  CHECK(conway.isCellOn(2, 1) == false);
-  CHECK(conway.isCellOn(0, 2) == false);
-  CHECK(conway.isCellOn(1, 2) == false);
-  CHECK(conway.isCellOn(2, 2) == false);
+  CHECK(conway.is_cell_on(0, 0));
+  CHECK(conway.is_cell_on(1, 0));
+  CHECK(conway.is_cell_on(2, 0) == false);
+  CHECK(conway.is_cell_on(0, 1));
+  CHECK(conway.is_cell_on(1, 1));
+  CHECK(conway.is_cell_on(2, 1) == false);
+  CHECK(conway.is_cell_on(0, 2) == false);
+  CHECK(conway.is_cell_on(1, 2) == false);
+  CHECK(conway.is_cell_on(2, 2) == false);
 }
 
-TEST_CASE("NextGeneration #2") {
+TEST_CASE("next_generation #2") {
   using namespace conway;
 
   Conway conway(3, 3);
 
-  conway.setCellOn(1, 0);
-  conway.setCellOn(1, 1);
-  conway.setCellOn(2, 2);
+  conway.set_cell_on(1, 0);
+  conway.set_cell_on(1, 1);
+  conway.set_cell_on(2, 2);
 
-  conway.nextGeneration();
+  conway.next_generation();
 
-  CHECK(conway.isCellOn(0, 0) == false);
-  CHECK(conway.isCellOn(1, 0) == false);
-  CHECK(conway.isCellOn(2, 0) == false);
-  CHECK(conway.isCellOn(0, 1) == false);
-  CHECK(conway.isCellOn(1, 1));
-  CHECK(conway.isCellOn(2, 1));
-  CHECK(conway.isCellOn(0, 2) == false);
-  CHECK(conway.isCellOn(1, 2) == false);
-  CHECK(conway.isCellOn(2, 2) == false);
+  CHECK(conway.is_cell_on(0, 0) == false);
+  CHECK(conway.is_cell_on(1, 0) == false);
+  CHECK(conway.is_cell_on(2, 0) == false);
+  CHECK(conway.is_cell_on(0, 1) == false);
+  CHECK(conway.is_cell_on(1, 1));
+  CHECK(conway.is_cell_on(2, 1));
+  CHECK(conway.is_cell_on(0, 2) == false);
+  CHECK(conway.is_cell_on(1, 2) == false);
+  CHECK(conway.is_cell_on(2, 2) == false);
 }

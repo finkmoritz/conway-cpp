@@ -5,7 +5,8 @@
 
 using namespace conway;
 
-Conway::Conway(short _width, short _height) : width(std::move(_width)), height(std::move(_height)) {
+Conway::Conway(unsigned short _width, unsigned short _height)
+    : width(std::move(_width)), height(std::move(_height)) {
   cells = new char[_width * _height]();
 
   for (unsigned short i = 0; i < _width * _height; ++i) {
@@ -21,17 +22,17 @@ Conway::Conway(Conway& other) : width(other.width), height(other.height) {
 }
 
 void Conway::print() {
-  for (short y = 0; y < height; ++y) {
-    for (short x = 0; x < width; ++x) {
+  for (unsigned short y = 0; y < height; ++y) {
+    for (unsigned short x = 0; x < width; ++x) {
       std::cout << (cells[y * width + x] & 0x01) << " ";
     }
     std::cout << std::endl;
   }
 }
 
-bool Conway::isCellOn(short x, short y) { return cells[y * width + x] & 0x01; }
+bool Conway::is_cell_on(unsigned short x, unsigned short y) { return cells[y * width + x] & 0x01; }
 
-void Conway::setCellOn(short x, short y) {
+void Conway::set_cell_on(unsigned short x, unsigned short y) {
   char* cell = cells + y * width + x;
 
   *cell |= 0x01;
@@ -52,7 +53,7 @@ void Conway::setCellOn(short x, short y) {
   }
 }
 
-void Conway::setCellOff(short x, short y) {
+void Conway::set_cell_off(unsigned short x, unsigned short y) {
   char* cell = cells + y * width + x;
 
   *cell &= ~0x01;
@@ -73,20 +74,22 @@ void Conway::setCellOff(short x, short y) {
   }
 }
 
-void Conway::toggleCell(short x, short y) {
-  if (isCellOn(x, y)) {
-    setCellOff(x, y);
+void Conway::toggle_cell(unsigned short x, unsigned short y) {
+  if (is_cell_on(x, y)) {
+    set_cell_off(x, y);
   } else {
-    setCellOn(x, y);
+    set_cell_on(x, y);
   }
 }
 
-short Conway::getNeighbourCount(short x, short y) { return cells[y * width + x] >> 1; }
+unsigned short Conway::get_neighbour_count(unsigned short x, unsigned short y) {
+  return cells[y * width + x] >> 1;
+}
 
-void Conway::nextGeneration() {
+void Conway::next_generation() {
   change_list.remove_if([this](int index) {
     unsigned short neighbourCount = cells[index] >> 1;
-    if (isCellOn(index % width, index / width)) {
+    if (is_cell_on(index % width, index / width)) {
       return neighbourCount == 2 || neighbourCount == 3;
     } else {
       return neighbourCount != 3;
@@ -94,6 +97,6 @@ void Conway::nextGeneration() {
   });
 
   for (unsigned short index : change_list) {
-    toggleCell(index % width, index / width);
+    toggle_cell(index % width, index / width);
   }
 }
