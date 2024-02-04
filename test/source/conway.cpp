@@ -69,6 +69,22 @@ TEST_CASE("SetCellOff") {
   CHECK(!conway.isCellOn(0, 0));
 }
 
+TEST_CASE("ToggleCell") {
+  using namespace conway;
+
+  Conway conway(1, 1);
+
+  CHECK(!conway.isCellOn(0, 0));
+
+  conway.toggleCell(0, 0);
+
+  CHECK(conway.isCellOn(0, 0));
+
+  conway.toggleCell(0, 0);
+
+  CHECK(!conway.isCellOn(0, 0));
+}
+
 TEST_CASE("GetNeighbourCount") {
   using namespace conway;
 
@@ -122,4 +138,48 @@ TEST_CASE("GetNeighbourCount (on boundary)") {
       CHECK(conway.getNeighbourCount(x, y) == 0);
     }
   }
+}
+
+TEST_CASE("NextGeneration") {
+  using namespace conway;
+
+  Conway conway(3, 3);
+
+  conway.setCellOn(0, 1);
+  conway.setCellOn(1, 0);
+  conway.setCellOn(1, 1);
+
+  conway.nextGeneration();
+
+  CHECK(conway.isCellOn(0, 0));
+  CHECK(conway.isCellOn(1, 0));
+  CHECK(conway.isCellOn(2, 0) == false);
+  CHECK(conway.isCellOn(0, 1));
+  CHECK(conway.isCellOn(1, 1));
+  CHECK(conway.isCellOn(2, 1) == false);
+  CHECK(conway.isCellOn(0, 2) == false);
+  CHECK(conway.isCellOn(1, 2) == false);
+  CHECK(conway.isCellOn(2, 2) == false);
+}
+
+TEST_CASE("NextGeneration #2") {
+  using namespace conway;
+
+  Conway conway(3, 3);
+
+  conway.setCellOn(1, 0);
+  conway.setCellOn(1, 1);
+  conway.setCellOn(2, 2);
+
+  conway.nextGeneration();
+
+  CHECK(conway.isCellOn(0, 0) == false);
+  CHECK(conway.isCellOn(1, 0) == false);
+  CHECK(conway.isCellOn(2, 0) == false);
+  CHECK(conway.isCellOn(0, 1) == false);
+  CHECK(conway.isCellOn(1, 1));
+  CHECK(conway.isCellOn(2, 1));
+  CHECK(conway.isCellOn(0, 2) == false);
+  CHECK(conway.isCellOn(1, 2) == false);
+  CHECK(conway.isCellOn(2, 2) == false);
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <list>
+
 namespace conway {
 
   /**
@@ -9,6 +11,7 @@ namespace conway {
     short width;
     short height;
     char* cells;
+    std::list<unsigned short> change_list;
 
   public:
     /**
@@ -50,9 +53,19 @@ namespace conway {
     void setCellOff(short x, short y);
 
     /**
+     * @brief Toggles the cell state at the given coordinates
+     */
+    void toggleCell(short x, short y);
+
+    /**
      * @brief Returns the number of live neighbour cells for the cells at the given coordinates
      */
     short getNeighbourCount(short x, short y);
+
+    /**
+     * @brief Computes the next generation
+     */
+    void nextGeneration();
   };
 
 }  // namespace conway
